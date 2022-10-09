@@ -1,5 +1,7 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import React from "react";
+import ButtonTest from "./components/buttonTest/buttonTest.tsx";
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
         >
           Learn React
         </a>
+        <ButtonTest></ButtonTest>
       </header>
     </div>
   );
