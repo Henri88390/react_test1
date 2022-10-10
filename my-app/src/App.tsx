@@ -2,14 +2,10 @@ import { getPosts } from "services";
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Button } from "components";
+import { Post } from "models";
 
 function App() {
-  const [data, setPosts1] = useState({
-    completed: false,
-    id: 0,
-    title: "",
-    userId: 0,
-  });
+  const [data, setPosts1] = useState<Post>();
   const [clicked, plusOne] = useState(0);
   function clickButton() {
     plusOne(clicked + 1);
@@ -18,6 +14,7 @@ function App() {
   useEffect(() => {
     if (clicked > 0) {
       getPosts(clicked).then((res) => {
+        console.log(res);
         setPosts1(res.data);
       });
     }
@@ -25,33 +22,38 @@ function App() {
 
   useEffect(() => {}, [data]);
 
+  const divStyle = {
+    display: "flex",
+    flexDirection: "column",
+  };
+
   function ClickedComponent() {
-    if (clicked > 0) {
+    if (data !== undefined) {
       return (
-        <ul>
-          <div>
-            <li>{data.id}</li>
-            <li>{data.title}</li>
-            <li>{data.userId}</li>
-            <li>{data.completed}</li>
-          </div>
-        </ul>
+        <div style={divStyle}>
+          <div>{data.id}</div>
+          <div>{data.title}</div>
+          <div>{data.userId}</div>
+          <div>{data.completed}</div>
+        </div>
       );
     }
   }
 
   return (
     <div className="App">
+      <Button></Button>
       <header className="App-header">
         <Button
-          border="dashed"
+          border="1px solid white"
           color="#fdffc4"
-          height="200px"
+          height="50px"
           onClick={() => clickButton()}
-          radius="10%"
+          radius="10px"
           width="200px"
-          children={<ClickedComponent></ClickedComponent>}
+          children={<div>Click me to display the next post !</div>}
         />
+        <ClickedComponent></ClickedComponent>
       </header>
     </div>
   );
